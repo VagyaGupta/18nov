@@ -1,0 +1,300 @@
+<div
+  class="col-md-11 col-sm-12 mt-3"
+  *checkPermission="['employeeInbox', 'approverInbox', 'adminInbox']"
+>
+  <mat-tab-group
+    mat-stretch-tabs="false"
+    class="example-stretched-tabs"
+    [selectedIndex]="activeTabIndex"
+    (selectedIndexChange)="tabChange($event)"
+    animationDuration="0"
+  >
+    <ng-container>
+
+      <!-- Personal Details Tab -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon color="primary" class="me-2">person</mat-icon>
+          <div class="mat-tab-label-text mat-text-primary" [ngStyle]="{ 'font-size' : '1rem' }">Details</div>
+        </ng-template>
+
+        <ng-template matTabContent>
+          <ng-container *ngIf="employeeDetails">
+            <section class="personal-information">
+              <div class="tablebg mt-4 rounded">
+              <div>
+                <h6 class="mat-text-primary mt-2 ps-2">Personal Information</h6>
+              </div>
+              <div class="row m-0 mt-2">
+                <div class="col-md-4 col-sm-12 mb-3">
+                  <ems-text
+                    label="Employee Number"
+                    [isViewOnly]="true"
+                    [modelValue]="
+                      employeeDetails?.employeeNumber
+                        ? employeeDetails?.employeeNumber
+                        : '-'
+                    "
+                  ></ems-text>
+                </div>
+                <div class="col-md-4 col-sm-12 mb-3">
+                  <ems-text
+                    label="Name"
+                    [isViewOnly]="true"
+                    [modelValue]="
+                      employeeDetails.firstName
+                        ? employeeDetails.lastName
+                          ? employeeDetails.firstName +
+                            ' ' +
+                            employeeDetails.lastName
+                          : employeeDetails.firstName
+                        : ''
+                    "
+                  ></ems-text>
+                </div>
+                <div class="col-md-4 col-sm-12 mb-3">
+                  <ems-text
+                    label="Phone no"
+                    [isViewOnly]="true"
+                    [modelValue]="employeeDetails?.workPhone"
+                  ></ems-text>
+                </div>
+                <div class="col-md-4 col-sm-12 mb-3">
+                  <ems-text
+                    label="Emergency contact no."
+                    [isViewOnly]="true"
+                    [modelValue]="employeeDetails?.homePhone"
+                  ></ems-text>
+                </div>
+                <div class="col-md-4 col-sm-12 mb-3">
+                  <ems-text
+                    label="Address"
+                    [isViewOnly]="true"
+                    [modelValue]="employeeDetails?.addressLine1"
+                  ></ems-text>
+                </div>
+                <div class="col-md-4 col-sm-12 mb-3">
+                  <ems-text
+                    label="DOB"
+                    [isViewOnly]="true"
+                    [modelValue]="employeeDetails?.dob | date : 'dd/MM/yyyy'"
+                  ></ems-text>
+                </div>
+              </div>
+              </div>
+            </section>
+            <div class="tablebg mt-4 rounded">
+            <!-- Official Information Tab  -->
+            <section class="official-information">
+              <div>
+                <h6 class="mat-text-primary mt-2 ps-2">Official Information</h6>
+              </div>
+              <div class="row m-0 mt-2">
+                <div class="col-md-4">
+                  <ems-text
+                    label="Employment Type"
+                    [isViewOnly]="true"
+                    [modelValue]="employeeDetails?.type"
+                  ></ems-text>
+                </div>
+                <div class="col-md-4">
+                  <ems-text
+                    label="Designation"
+                    [isViewOnly]="true"
+                    [modelValue]="employeeDetails?.jobTitle"
+                  ></ems-text>
+                </div>
+                <div class="col-md-4 col-sm-12 mb-3">
+                  <ems-text
+                    label="Date of joining"
+                    [isViewOnly]="true"
+                    [modelValue]="
+                      employeeDetails?.joiningDate | date : 'dd/MM/yyyy'
+                    "
+                  ></ems-text>
+                </div>
+                <div class="col-md-4 col-sm-12 mb-3">
+                  <ems-text
+                    label="Reporting To"
+                    [isViewOnly]="true"
+                    [modelValue]="
+                      employeeDetails?.reportingManager?.firstName
+                        ? employeeDetails.reportingManager.firstName +
+                          ' ' +
+                          employeeDetails.reportingManager.lastName
+                        : '-'
+                    "
+                  ></ems-text>
+                </div>
+                <div class="col-md-3" *ngIf="employeeDetails?.confirmed">
+                  <ems-text
+                    label="Confirmation Date"
+                    [modelValue]="
+                      employeeDetails?.confirmationDate | date : 'dd/MM/yyyy'
+                    "
+                    [isViewOnly]="true"
+                  ></ems-text>
+                </div>
+                <div class="col-md-4" *ngIf="!employeeDetails?.confirmed">
+                  <ems-text
+                    label="Confirmation Status"
+                    [modelValue]="'Pending'"
+                    [isViewOnly]="true"
+                  ></ems-text>
+                </div>
+                <div class="col-md-4 col-sm-12 mb-3">
+                  <ems-text
+                    label="Office"
+                    [isViewOnly]="true"
+                    [modelValue]="employeeDetails?.jobLocation"
+                  ></ems-text>
+                </div>
+              </div>
+            </section>
+            </div>
+            
+            <!-- Asset Details  -->
+            <div class="tablebg mt-4 rounded">
+            <ng-container>
+              <div>
+                <h6 class="mat-text-primary mt-2 ps-2">Asset Details</h6>
+              </div>
+              <div class="mt-2">
+                <ems-table
+                  *ngIf="assetsColumnDefs"
+                  [rowData]="assetsRowData"
+                  [columnDefs]="assetsColumnDefs"
+                  nowRowsMessage="No assets issued."
+                  [showTableHeader]="false"
+                  [showPagination]="false"
+                >
+                </ems-table>
+              </div>
+            </ng-container>
+            </div>
+          </ng-container>
+        </ng-template>
+      </mat-tab>
+
+      <!-- Financial Details  -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon color="primary" class="me-2">insert_chart</mat-icon>
+          <div class="mat-tab-label-text mat-text-primary"  [ngStyle]="{ 'font-size' : '1rem' }">Financial Details </div>
+      </ng-template>
+
+        <ng-template matTabContent>
+          <ng-container *ngIf="financialDetail">
+            <div class="tablebg mt-4 rounded">
+            <section class="financial-information">
+              <div
+                class="d-flex justify-content-between align-items-center mt-2"
+              >
+                <h6 class="mat-text-primary mt-2 ps-2">
+                  Financial Information
+                </h6>
+              </div>
+              <div class="row m-0 mt-2">
+                <div class="col-md-4 col-sm-12 mb-3">
+                  <ems-text
+                    label="Aadhar Number"
+                    [isViewOnly]="true"
+                    [modelValue]="
+                      financialDetail?.aadharNumber
+                        ? financialDetail?.aadharNumber
+                        : '-'
+                    "
+                  ></ems-text>
+                </div>
+                <div class="col-md-4 col-sm-12 mb-3">
+                  <ems-text
+                    label="Pan Number"
+                    [isViewOnly]="true"
+                    [modelValue]="
+                      financialDetail?.panNumber
+                        ? financialDetail?.panNumber
+                        : '-'
+                    "
+                  ></ems-text>
+                </div>
+                <div class="col-md-4 col-sm-12 mb-3">
+                  <ems-text
+                    label="UAN Number"
+                    [isViewOnly]="true"
+                    [modelValue]="
+                      financialDetail?.uanNumber
+                        ? financialDetail?.uanNumber
+                        : '-'
+                    "
+                  ></ems-text>
+                </div>
+                <div class="col-md-4 col-sm-12 mb-3">
+                  <ems-text
+                    label="Passport Number"
+                    [isViewOnly]="true"
+                    [modelValue]="
+                      financialDetail?.passportNumber
+                        ? financialDetail?.passportNumber
+                        : '-'
+                    "
+                  ></ems-text>
+                </div>
+                <div class="col-md-4 col-sm-12 mb-3">
+                  <ems-text
+                    label="EPF Number"
+                    [isViewOnly]="true"
+                    [modelValue]="
+                      financialDetail?.epfNumber
+                        ? financialDetail?.epfNumber
+                        : '-'
+                    "
+                  ></ems-text>
+                </div>
+              </div>
+            </section>
+          </div>
+            <!-- Bank Details  -->
+            <div class="tablebg mt-4 rounded">
+            <section class="bank-details">
+              <div
+                class="d-flex justify-content-between align-items-center mt-2"
+              >
+                <h6 class="mat-text-primary ps-2 mb-0">Bank Details</h6>
+                <button
+                  mat-button
+                  type="button"
+                  color="primary"
+                  class="fw-bold fs-18 small"
+                  (click)="addBank()"
+                >
+                  <mat-icon color="primary" class="material-icons">
+                    add_circle_outline
+                  </mat-icon>
+                  Add Bank
+                </button>
+              </div>
+              <div class="mt-2">
+                <ems-table
+                  *ngIf="bankColumnDefs"
+                  [rowData]="bankRowData"
+                  [columnDefs]="bankColumnDefs"
+                  nowRowsMessage="No bank detail added."
+                  [showTableHeader]="false"
+                >
+                </ems-table>
+              </div>
+            </section>
+          </div>
+            <div class="small small-text mt-4 leave-balance-info-text-color">
+              <i>
+                Note:- Bank marked Active shall be used for all financial
+                transactions processing. Changes made after 20th of month will
+                be considered in next month salary processing only.</i
+              >
+            </div>
+          </ng-container>
+        </ng-template>
+      </mat-tab>
+    </ng-container>
+  </mat-tab-group>
+</div>

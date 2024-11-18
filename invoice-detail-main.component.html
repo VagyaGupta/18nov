@@ -1,0 +1,176 @@
+
+<div class="invoice-container" id="invoice-container">
+    <!-- Header Section -->
+    <header>
+        <div class="logos">
+            <img [src]="imageUrl" alt="Company Logo">
+        </div>
+        <div class="invoice-title">
+            <h1>TAX Invoice</h1>
+        </div>
+    </header>
+
+    <!-- Company and Invoice Details -->
+    <section class="details-section">
+        <div class="company-details">
+            <p><strong>Company Details:</strong></p>
+            <p>
+                Name: {{ invoiceDetail?.company?.name ?? '-' }}<br>
+                IEC: {{ invoiceDetail?.company?.iec ?? '-' }}<br>
+                UHYAM Reg No.: {{ invoiceDetail?.company?.udyamRegNo ?? '-' }}<br>
+                CIN/GSTIN: {{ invoiceDetail?.company?.gstin ?? '-' }}<br>
+                Email: {{ invoiceDetail?.company?.email ?? '-' }}<br>
+                Contact No.: {{ invoiceDetail?.company?.contactNumber ?? '-' }}<br>
+                Invoice Prefix: {{ invoiceDetail?.company?.invoicePrefix ?? '-' }}
+            </p>
+        </div>
+        <div class="invoice-details">
+            <p>
+                Invoice No.: <strong>{{ invoiceDetail?.invoiceNo ?? '-' }}</strong><br>
+                Dated: <strong>{{ invoiceDetail?.dated ?? '-' }}</strong><br>
+                Delivery Note: <strong>{{ invoiceDetail?.note ?? '-' }}</strong><br>
+                Payment Due Date: <strong>{{ invoiceDetail?.dueDate ?? '-' }}</strong><br>
+                Reference Date: <strong>{{ invoiceDetail?.referenceDate ?? '-' }}</strong><br>
+                Reference Number: <strong>{{ invoiceDetail?.referenceNumber ?? '-' }}</strong><br>
+                Buyer's Order No.: <strong>{{ invoiceDetail?.orderNo ?? '-' }}</strong><br>
+                Dispatch Note Date: <strong>{{ invoiceDetail?.dispatchNoteDate ?? '-' }}</strong><br>
+                Dispatch Doc No.: <strong>{{ invoiceDetail?.dispatchDocNo ?? '-' }}</strong>
+            </p>
+        </div>
+    </section>
+
+    <!-- Buyer and Vendor Details -->
+    <section class="buyer-details">
+        <div class="buyer-info">
+            <p><strong>Buyer Details:</strong></p>
+            <p>
+                Name: {{ invoiceDetail?.vendor?.name ?? '-' }}<br>
+                IEC: {{ invoiceDetail?.vendor?.iec ?? '-' }}<br>
+                UHYAM Reg No.: {{ invoiceDetail?.vendor?.udyamRegNo ?? '-' }}<br>
+                CIN/GSTIN: {{ invoiceDetail?.vendor?.gstin ?? '-' }}<br>
+                Email: {{ invoiceDetail?.vendor?.email ?? '-' }}<br>
+                Contact No.: {{ invoiceDetail?.vendor?.contactNumber ?? '-' }}<br>
+                Invoice Prefix: {{ invoiceDetail?.vendor?.invoicePrefix ?? '-' }}
+            </p>
+        </div>
+        <div class="vendor-info">
+            <p>
+                Dispatched Through: <strong>{{ invoiceDetail?.dispatchThrough ?? '-' }}</strong><br>
+                Destination: <strong>{{ invoiceDetail?.destination ?? '-' }}</strong><br>
+                Terms of Delivery: <strong>{{ invoiceDetail?.termOfDelivery ?? '-' }}</strong>
+            </p>
+        </div>
+    </section>
+
+    <!-- Item Table -->
+    <table class="invoice-table">
+        <thead>
+            <tr>
+                <th>Sr. No.</th>
+                <th>Particulars</th>
+                <th>HSN/SAC</th>
+                <th>Quantity</th>
+                <th>Rate</th>
+                <th>GST (%)</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of invoiceDetail?.items ?? []; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ item?.description ?? '-' }}</td>
+                <td>{{ item?.hsn ?? '-' }}</td>
+                <td>{{ item?.quantity ?? '-' }}</td>
+                <td>{{ item?.rate ?? '-' }}</td>
+                <td>{{ item?.gst ?? '-' }}</td>
+                <td>{{ item?.amount ?? '-' }}</td>
+            </tr>
+        </tbody>
+        <br />
+        <tfoot>
+            <tr>
+                <td><strong>Total</strong></td>
+                <td>{{ invoiceDetail?.itemTotalAmount ?? '-' }}</td>
+            </tr>
+            <tr>
+                <td><strong>Total Amount(in words)</strong></td>
+                <td>{{ invoiceDetail?.itemtotalAmountWords ?? '-' }}</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <!-- tax Table -->
+    <table class="invoice-table">
+        <thead>
+            <tr>
+                <th>HSN/SAC</th>
+                <th>Taxable Value</th>
+                <!-- CGST Header with Colspan -->
+                <th colspan="2">CGST</th>
+
+                <th colspan="2">SGST/UTGST</th>
+                <th>Total Tax Amount</th>
+            </tr>
+            <tr>
+                <!-- Sub-headers for CGST -->
+                <th></th> <!-- Empty header for alignment -->
+                <th></th> <!-- Empty header for alignment -->
+                <th>Rate</th>
+                <th>Amount</th>
+                <th>Rate</th>
+                <th>Amount</th>
+                <th></th> <!-- Empty header for alignment -->
+
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of invoiceDetail?.items; let i = index">
+                <td>{{ item?.hsn || '-' }}</td>
+                <td>{{ item?.taxableValue || '-' }}</td>
+                <td>{{ item?.cgstRate || '-' }}</td>
+                <td>{{ item?.cgstAmount || '-' }}</td>
+                <td>{{ item?.sgstrate || '-' }}</td>
+                <td>{{ item?.sgstAmount || '-' }}</td>
+                <td>{{ item?.amount || '-' }}</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td><strong>Total Amount(in words)</strong></td>
+                <td>{{ invoiceDetail?.itemtotalAmountWords ?? '-' }}</td>
+            </tr>
+            <!-- <tr>
+                <td><strong>Company's Pan:</strong></td>
+                <td>{{ invoiceDetail?.company?.pan ?? '-' }}</td>
+            </tr> -->
+            <tr>
+                <td><strong>Declaration</strong></td>
+                <td>{{ invoiceDetail?.declaration ?? '-' }}</td>
+            </tr>
+        </tfoot>
+    </table>
+
+
+    <section class="d-flex w-100">
+        <div class="bank-details">
+            <p><strong>Company Bank Details:</strong></p>
+            <p>
+                Name: {{ invoiceDetail?.company?.bankEntity?.bankName ?? '-' }}<br>
+                Bank Account No.: {{ invoiceDetail?.company?.bankEntity?.accountNumber ?? '-' }}<br>
+                IFSC Code: {{ invoiceDetail?.company?.bankEntity?.ifscCode ?? '-' }}<br>
+                Account Holder Name: {{ invoiceDetail?.company?.bankEntity?.accountHolderName ?? '-' }}<br>
+            </p>
+        </div>
+    </section>
+    <section class="d-flex w-100">
+        <div class="bank-details">
+            <br>
+            <br>
+            Name: {{ invoiceDetail?.company?.name ?? '-' }}<br>
+            <h6>Authorised Signatory</h6>
+        </div>
+    </section>
+</div>
+<div class="d-flex justify-content-center align-items-center pt-3">
+<button matTooltipClass="tooltipClass"
+matTooltip="Download Invoice" (click)="exportHTMLtoPDF()" mat-raised-button color="primary">Download Invoice</button>
+</div>

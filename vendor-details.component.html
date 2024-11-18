@@ -1,0 +1,72 @@
+<mat-card appearance="outlined" class="bg-white mt-3 col-lg-8 col-md-12 col-sm-12">
+
+    <div class="w-100 d-flex justify-content-end align-items-end mt-2">
+        <ng-container>
+            <button class="mx-1" type="button" (click)="editvendor()" mat-raised-button color="primary">
+                <mat-icon>edit</mat-icon>Edit Vendor
+            </button>
+            <button class="mx-1" type="button" (click)="deletevendor()" mat-raised-button color="warn">
+                <mat-icon>exit_to_app</mat-icon>Delete Vendor
+            </button>
+        </ng-container>
+    </div>
+
+    <mat-card-content>
+        <div class="w-100">
+            <h6 class="my-4 mat-text-primary">Vendor Details</h6>
+            <div class="row d-flex justify-content-start p-0 my-3">
+                <div class="col-md-4">
+                    <ems-text label="Vendor Number" [isViewOnly]="true" [modelValue]="vendorDetails?.id"></ems-text>
+                </div>
+                <div class="col-md-4">
+                    <ems-text label="Vendor Name" [isViewOnly]="true" [modelValue]="vendorDetails?.name"></ems-text>
+                </div>
+                <div class="col-md-4">
+                    <ems-text label="Address" [isViewOnly]="true" [modelValue]="vendorDetails?.address"></ems-text>
+                </div>
+            </div>
+
+            <div class="row d-flex justify-content-start p-0 my-3">
+                <div class="col-md-4">
+                    <ems-text label="UDYAM Reg No." [isViewOnly]="true"
+                        [modelValue]="vendorDetails?.udyamRegNo"></ems-text>
+                </div>
+                <div class="col-md-4">
+                    <ems-text label="CIN" [isViewOnly]="true" [modelValue]="vendorDetails?.cin"></ems-text>
+                </div>
+                <div class="col-md-4">
+                    <ems-text label="Email" [isViewOnly]="true" [modelValue]="vendorDetails?.email"></ems-text>
+                </div>
+            </div>
+
+            <div class="row d-flex justify-content-start p-0 my-3">
+                <div class="col-md-4">
+                    <ems-text label="Contact Number" [isViewOnly]="true"
+                        [modelValue]="vendorDetails?.contactNo"></ems-text>
+                </div>
+            </div>
+
+            <h6 class="my-4 mat-text-primary">Bank Details</h6>
+            <div class="row d-flex justify-content-start p-0 my-3">
+                <div class="col-md-4">
+                    <ems-text label="Bank Name" [isViewOnly]="true"
+                        [modelValue]="vendorDetails?.bankEntity?.bankName"></ems-text>
+                </div>
+                <div class="col-md-4">
+                    <ems-text label="IFSC Code" [isViewOnly]="true"
+                        [modelValue]="vendorDetails?.bankEntity?.ifscCode"></ems-text>
+                </div>
+                <div class="col-md-4">
+                    <ems-text label="Account Number" [isViewOnly]="true"
+                        [modelValue]="vendorDetails?.bankEntity?.accountNumber"></ems-text>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-start p-0 my-3">
+                <div class="col-md-4">
+                    <ems-text label="Account Holder Name" [isViewOnly]="true"
+                        [modelValue]="vendorDetails?.bankEntity?.accountHolderName"></ems-text>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

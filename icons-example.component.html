@@ -1,0 +1,8 @@
+<div class="d-flex flex-wrap">
+    <ng-container *ngFor="let icon of matIcons">
+        <button type="button" mat-icon-button [matTooltip]="icon" matTooltipClass="tooltipClass" class="m-3">
+            <mat-icon color="primary" [ngStyle]="{ 'font-size' : '40px', 'width' : '40px', 'height' : '40px' }">{{icon}}</mat-icon>
+        </button>
+    </ng-container>
+
+</div>

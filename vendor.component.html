@@ -1,0 +1,17 @@
+<ng-container>
+    <div class="mt-3 col-lg-9">
+        <ems-table *ngIf="columnDefs" [rowData]="rowData" [columnDefs]="columnDefs" [showRefresh]="false"
+            [showTableName]="false" [enableFilter]="true"  [showRowActions]="false"  nowRowsMessage="No vendor available." >
+            <div class="d-flex justify-content-end align-items-center">
+            <ng-container *checkPermission="['default']">
+             <button mat-button type="button" color="primary" (click)="addvendor()" class="fw-bold fs-18 small">
+                 <mat-icon color="primary" class="material-icons">
+                     add_circle_outline
+                 </mat-icon>
+                 Add Vendor
+             </button>
+         </ng-container>
+         </div>
+        </ems-table>
+    </div>
+ </ng-container>

@@ -1,0 +1,91 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+.invoice-container {
+    max-width: 900px;
+    margin: auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #333;
+}
+
+.logos img {
+    width: 150px;
+}
+
+.invoice-title h1 {
+    color: #04203d;
+}
+
+.details-section,
+.buyer-details {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.details-section div,
+.buyer-details div {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 10px;
+}
+
+.invoice-table,
+.tax-summary {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.invoice-table th,
+.invoice-table td,
+.tax-summary th,
+.tax-summary td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.invoice-table th,
+.tax-summary th {
+    background-color: #102d4d;
+    color: #fff;
+}
+
+.invoice-table tfoot td {
+    font-weight: bold;
+}
+
+.bank-details {
+    margin-top: 20px;
+    text-align: right;
+    align-items: end;
+    justify-items: end;
+    margin-left: auto; /* Aligns the section to the right */
+}
+
+footer {
+    text-align: center;
+    padding-top: 10px;
+    border-top: 2px solid #333;
+    font-size: 0.9em;
+}
